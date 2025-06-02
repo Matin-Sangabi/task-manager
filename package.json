@@ -1,0 +1,26 @@
+{
+  "name": "task-manager",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon node index.js"
+  },
+  "dependencies": {
+    "auto-bind": "4",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.12.0",
+    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-security": "^3.0.1",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3"
+  }
+}
