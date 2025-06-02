@@ -1,3 +1,6 @@
+const autoBind = require("auto-bind")
+const { TaskService } = require("./tasksk.service")
+
 class TaskController {
     #taskService
     constructor() {
@@ -7,6 +10,7 @@ class TaskController {
 
     async createTask(req, res, next) {
         try {
+            await createTaskSchema.validateAsync(req.body)
             const { title, description } = req.body
             const { id } = req.user
             const taskDto = { title, description, userId: id }
@@ -22,6 +26,7 @@ class TaskController {
 
     async getTasks(req, res, next) {
         try {
+            await getTaskByIdSchema.validateAsync(req.params)
             const { id } = req.user
             const tasks = await this.#taskService.getTasks(id)
             res.status(200).json({
@@ -35,6 +40,7 @@ class TaskController {
 
     async getTaskById(req, res, next) {
         try {
+            await getTaskByIdSchema.validateAsync(req.params)
             const { id } = req.params
             const { id: userId } = req.user
             const task = await this.#taskService.getTaskById(id, userId)
@@ -49,6 +55,7 @@ class TaskController {
 
     async updateTask(req, res, next) {
         try {
+            await updateTaskSchema.validateAsync(req.body)
             const { id } = req.params
             const { id: userId } = req.user
             const taskDto = req.body

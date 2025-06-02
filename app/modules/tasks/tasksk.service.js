@@ -1,3 +1,6 @@
+const { taskModel } = require("../../models/tasks.model")
+const { userModel } = require("../../models/user.model")
+
 class TaskService {
     #taskModel
     #userModel

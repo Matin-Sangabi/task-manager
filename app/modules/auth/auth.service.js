@@ -1,7 +1,7 @@
 const autoBind = require('auto-bind')
 const { userModel } = require('../../models/user.model')
 const createHttpError = require('http-errors')
-const { hashPassword } = require('../../common/password/bcrypt.password')
+const { hashPassword, verifyPassword } = require('../../common/password/bcrypt.password')
 const { createJwt } = require('../../common/jwt/jwt')
 
 class AuthService {

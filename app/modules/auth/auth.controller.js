@@ -1,3 +1,4 @@
+const autoBind = require('auto-bind')
 const { AuthService } = require('./auth.service')
 
 class AuthController {
@@ -9,6 +10,7 @@ class AuthController {
 
     async registerUser(req, res, next) {
         try {
+            await registerSchema.validateAsync(req.body)
             const { email, password, first_name, last_name } = req.body
             const userDto = { email, password, first_name, last_name }
             const user = await this.#authService.registerUser(userDto)
