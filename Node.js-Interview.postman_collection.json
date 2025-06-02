@@ -1,106 +1,233 @@
 {
-    "info": {
-        "_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
-        "name": "Node.js Interview API",
-        "description": "API collection for Node.js Interview project",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "Authentication",
-            "item": [
-                {
-                    "name": "Register User",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/register",
-                            "host": ["{{base_url}}"],
-                            "path": ["api", "v1", "auth", "register"]
-                        }
-                    }
-                },
-                {
-                    "name": "Login User",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/login",
-                            "host": ["{{base_url}}"],
-                            "path": ["api", "v1", "auth", "login"]
-                        }
-                    }
-                },
-                {
-                    "name": "Get User Information",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{auth_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/auth/user",
-                            "host": ["{{base_url}}"],
-                            "path": ["api", "v1", "auth", "user"]
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Tasks",
-            "item": [
-                {
-                    "name": "Get Tasks",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{auth_token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/tasks",
-                            "host": ["{{base_url}}"],
-                            "path": ["api", "v1", "tasks"]
-                        }
-                    }
-                }
-            ]
-        }
-    ],
-    "variable": [
-        {
-            "key": "base_url",
-            "value": "http://localhost:3000"
-        },
-        {
-            "key": "auth_token",
-            "value": "your_auth_token_here"
-        }
-    ]
+	"info": {
+		"_postman_id": "9e706060-a65f-428d-96af-57e8b55117d1",
+		"name": "Node.js Interview API",
+		"description": "OverviewThis is a Node.js backend application that provides authentication and task management functionality.EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26231509",
+		"_collection_link": "https://cloudy-escape-23674.postman.co/workspace/fe16e4ae-c929-414f-b3fb-36a886a9373f/collection/26231509-9e706060-a65f-428d-96af-57e8b55117d1?action=share&source=collection_link&creator=26231509"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"testuser\",\n    \"last_name\": \"last_name\",\n    \"email\": \"test@example.com\",\n    \"password\": \"Ms2282725263\"\n}"
+						},
+						"url": "{{base_url}}/api/v1/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"access_token\", jsonData.data.accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"Ms2282725263\"\n}"
+						},
+						"url": "{{base_url}}/api/v1/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Information",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": "{{base_url}}/api/v1/auth/user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Get Tasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": "{{base_url}}/api/v1/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": "{{base_url}}/api/v1/tasks/{{id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"test title\",\r\n    \"description\": \"test description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/v1/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"title\": \"test title\", OPTIONAL\r\n    // \"description\": \"test description\", OPTIONAL\r\n    \"status\": \"in-progress\" // in-progress | done\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/v1/tasks/{{id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{base_url}}/api/v1/tasks/{{id}}"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "auth_token",
+			"value": "your_auth_token_here"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "id",
+			"value": "683dbb3c78eb9c6e8019d4b3",
+			"type": "default"
+		}
+	]
 }
