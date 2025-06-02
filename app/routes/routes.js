@@ -1,23 +1,12 @@
+const AuthGuard = require('../common/guard/authGuard')
 const { authRoutes } = require('../modules/auth/auth.routes')
-const { Router } = require('express')
-const router = Router()
+const { taskRoutes } = require('../modules/tasks/tasks.routes')
 
-const routes = [
-    {
-        path: '/auth',
-        route: authRoutes,
-    },
-    {
-        path: '/tasks',
-        route: taskRoutes,
-        middleware: [AuthGuard],
-    },
-]
+const router = require('express').Router()
 
-routes.forEach((route) => {
-    router.use(route.path, route.middleware, route.route)
-})
+router.use('/auth', authRoutes)
+router.use('/tasks', AuthGuard, taskRoutes)
 
 module.exports = {
-    routes,
+    allRoutes: router,
 }

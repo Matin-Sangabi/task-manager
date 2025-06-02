@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors')
-const { verifyJwt } = require('../jwt/Jwt')
+const { verifyJwt } = require('../jwt/jwt')
 const { userModel } = require('../../models/user.model')
 
 async function AuthGuard(req, res, next) {

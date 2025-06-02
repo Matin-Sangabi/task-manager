@@ -1,7 +1,10 @@
 const autoBind = require('auto-bind')
 const { userModel } = require('../../models/user.model')
 const createHttpError = require('http-errors')
-const { hashPassword, verifyPassword } = require('../../common/password/bcrypt.password')
+const {
+    hashPassword,
+    verifyPassword,
+} = require('../../common/password/bcrypt.password')
 const { createJwt } = require('../../common/jwt/jwt')
 
 class AuthService {
@@ -17,9 +20,8 @@ class AuthService {
         if (user) {
             throw createHttpError[401]('This user already exists')
         }
-        userDto.password = hashPassword(userDto.password)
-        const createNewUser = await this.#userModel.create(userDto)
-        return createNewUser
+        userDto.password = await hashPassword(userDto.password)
+        await this.#userModel.create(userDto)
     }
 
     async loginUser(userDto) {

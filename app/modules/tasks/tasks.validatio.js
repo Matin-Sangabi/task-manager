@@ -11,14 +11,7 @@ const updateTaskSchema = joi.object({
     status: joi.string().optional(),
 })
 
-const getTaskByIdSchema = joi.object({
-    id: joi.string().required(),
-})
-
-
-
 module.exports = {
     createTaskSchema,
     updateTaskSchema,
-    getTaskByIdSchema,
 }

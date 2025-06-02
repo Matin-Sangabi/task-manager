@@ -1,7 +1,6 @@
-const { Router } = require('express')
+const AuthGuard = require('../../common/guard/authGuard')
 const { AuthController } = require('./auth.controller')
-const { AuthGuard } = require('../../common/guard/authGuard')
-const router = Router()
+const router = require('express').Router()
 
 router.post('/register', AuthController.registerUser)
 router.post('/login', AuthController.loginUser)

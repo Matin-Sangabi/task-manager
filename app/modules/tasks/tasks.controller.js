@@ -1,5 +1,6 @@
-const autoBind = require("auto-bind")
-const { TaskService } = require("./tasksk.service")
+const autoBind = require('auto-bind')
+const { TaskService } = require('./tasksk.service')
+const { createTaskSchema, updateTaskSchema } = require('./tasks.validatio')
 
 class TaskController {
     #taskService
@@ -12,8 +13,8 @@ class TaskController {
         try {
             await createTaskSchema.validateAsync(req.body)
             const { title, description } = req.body
-            const { id } = req.user
-            const taskDto = { title, description, userId: id }
+            const { _id } = req.user
+            const taskDto = { title, description, userId: _id }
             const task = await this.#taskService.createTask(taskDto)
             res.status(201).json({
                 message: 'Task created successfully',
@@ -26,9 +27,8 @@ class TaskController {
 
     async getTasks(req, res, next) {
         try {
-            await getTaskByIdSchema.validateAsync(req.params)
-            const { id } = req.user
-            const tasks = await this.#taskService.getTasks(id)
+            const { _id } = req.user
+            const tasks = await this.#taskService.getTasks(_id)
             res.status(200).json({
                 message: 'Tasks fetched successfully',
                 data: tasks,
@@ -40,9 +40,8 @@ class TaskController {
 
     async getTaskById(req, res, next) {
         try {
-            await getTaskByIdSchema.validateAsync(req.params)
             const { id } = req.params
-            const { id: userId } = req.user
+            const { _id: userId } = req.user
             const task = await this.#taskService.getTaskById(id, userId)
             res.status(200).json({
                 message: 'Task fetched successfully',
@@ -57,7 +56,7 @@ class TaskController {
         try {
             await updateTaskSchema.validateAsync(req.body)
             const { id } = req.params
-            const { id: userId } = req.user
+            const { _id: userId } = req.user
             const taskDto = req.body
             const task = await this.#taskService.updateTask(id, userId, taskDto)
             res.status(200).json({
@@ -72,7 +71,7 @@ class TaskController {
     async deleteTask(req, res, next) {
         try {
             const { id } = req.params
-            const { id: userId } = req.user
+            const { _id: userId } = req.user
             const task = await this.#taskService.deleteTask(id, userId)
             res.status(200).json({
                 message: 'Task deleted successfully',

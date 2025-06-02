@@ -1,5 +1,6 @@
-const { taskModel } = require("../../models/tasks.model")
-const { userModel } = require("../../models/user.model")
+const autoBind = require('auto-bind')
+const { taskModel } = require('../../models/tasks.model')
+const { userModel } = require('../../models/user.model')
 
 class TaskService {
     #taskModel
@@ -21,12 +22,17 @@ class TaskService {
     }
 
     async getTasks(userId) {
-        const tasks = await this.#taskModel.find({ userId })
+        const tasks = await this.#taskModel
+            .find({ userId })
+            .populate('userId', 'first_name last_name')
+            .sort({ createdAt: -1 })
         return tasks
     }
 
     async getTaskById(taskId, userId) {
-        const task = await this.#taskModel.findOne({ _id: taskId, userId })
+        const task = await this.#taskModel
+            .findOne({ _id: taskId, userId })
+            .populate('userId', 'first_name last_name')
         return task
     }
 

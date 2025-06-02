@@ -2,9 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const { default: mongoose } = require('mongoose')
-const { routes } = require('./routes/routes')
 const path = require('path')
 const createError = require('http-errors')
+const { allRoutes } = require('./routes/routes')
 
 module.exports = class Application {
     #app = express()
@@ -21,7 +21,6 @@ module.exports = class Application {
         this.corsOptions()
         this.cookieParserConfig()
         this.createRoutes()
-        this.appSwaggerConfig()
         this.createServer()
         this.errorHandling()
     }
@@ -63,7 +62,7 @@ module.exports = class Application {
 
     createRoutes() {
         // routes
-        this.#app.use('/api/v1', routes)
+        this.#app.use('/api/v1', allRoutes)
     }
 
     errorHandling() {
